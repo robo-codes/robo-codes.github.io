@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Gender Reveal Game</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-image: url('C:\\Users\\solan\\Downloads\\lol.jpg');
+            background-size: cover; /* Adjusts the size of the background image */
+            background-repeat: no-repeat; /* Ensures the background image doesn't repeat */
+        }
+
+        #quiz-container {
+            background-color: #ffffff00;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            width: 100%;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 28px;
+            color: #ffffff;
+            margin-bottom: 20px;
+        }
+
+        p {
+            font-size: 16px;
+            color: #ffffff;
+            margin-bottom: 30px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+            color: #ffffff;
+            font-size: 18px;
+        }
+
+        input[type="text"] {
+            width: calc(100% - 20px);
+            padding: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            color: #ffffff;
+            border-radius: 5px;
+            background-color: #4caf4f00;
+            border: 1px solid #cccccc00;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #4caf50;
+            color: #ffffff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        #result {
+            display: none;
+            color: #ffffff;
+            margin-top: 30px;
+        }
+
+        #result-text {
+            font-size: 24px;
+            /* Apply a gradient background */
+            background-image: linear-gradient(to right, #fe00d4, #0008ff);
+            -webkit-background-clip: text; /* For webkit browsers to apply text clipping */
+            -webkit-text-fill-color: transparent; /* For webkit browsers to apply text color */
+            background-clip: text;
+            color: transparent; /* Set text color to transparent to show the gradient */
+        }
+    </style>
+</head>
+<body>
+    <div id="quiz-container">
+        <h1>Guess the Baby's Gender!</h1>
+        <p>Answer the following questions to guess the baby's gender.</p>
+        <form id="gender-quiz">
+            <label for="question1">Mummy mummy tare mithu khavu che?</label>
+            <input type="text" id="question1" name="question1" required autocomplete="off"><br>
+
+            <label for="question2">Aai tumchi subah mandi mandi aahe?</label>
+            <input type="text" id="question2" name="question2" required autocomplete="off"><br>
+
+            <label for="question3">Mate be like: Mereko to aisa dhak dhak ho rela hai?</label>
+            <input type="text" id="question3" name="question3" required autocomplete="off"><br>
+
+            <label for="question4">Kya maaji pagla gai hai?</label>
+            <input type="text" id="question4" name="question4" required autocomplete="off"><br>
+
+            <label for="question5">Papaji tussi mote ho rahe ho si?</label>
+            <input type="text" id="question5" name="question5" required autocomplete="off"><br>
+
+            <button type="submit">Submit</button>
+        </form>
+        <div id="result">
+            <h2 id="result-text"></h2>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('gender-quiz').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            displayResult('dedhso rupe lega! Fir bhi itni aasani se gender nahi batayega.');
+
+            document.getElementById('gender-quiz').reset();
+        });
+
+        function displayResult(message) {
+            const resultContainer = document.getElementById('result');
+            const resultText = document.getElementById('result-text');
+
+            resultText.textContent = message;
+            resultContainer.style.display = 'block';
+        }
+    </script>
+</body>
+</html>
+
