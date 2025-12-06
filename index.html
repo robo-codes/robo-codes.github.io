@@ -1,187 +1,109 @@
-<!DOCTYPE HTML>
-<!--
-	Read Only by HTML5 UP
-	html5up.net | @ajlkn
-	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
--->
-<html>
-	<head>
-		<title>Portfolio</title>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-		<link rel="stylesheet" href="assets/css/main.css" />
-		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" />
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Willow Weaves Co.</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Roboto:wght@300;400&display=swap" rel="stylesheet">
+</head>
+<body>
 
-	</head>
-	<body class="is-preload">
+    <header>
+        <nav>
+            <div class="logo">Willow Weaves Co.</div>
+            <ul>
+                <li><a href="#home">Home</a></li>
+                <li><a href="#weave">The Weave</a></li>
+                <li><a href="#lesson">The Lesson</a></li>
+                <li><a href="#about">About Us</a></li>
+            </ul>
+        </nav>
+    </header>
 
-		<!-- Header -->
-			<section id="header">
-				<header>
-					<span class="image avatar"><img src="images/ME.jpg" alt="" /></span>
-					<h1 id="logo"><a href="https://github.com/robo-codes" target="_blank">Ruturaj Solanki</a></h1>
-					<p>I am a simple person but rather ambitious one! So, trying to learn every possible thing that I encounter with on this journey of mine. And most importanatly feel free to advice.</p>
-				</header>
-				<nav id="nav">
-					<ul>
-						<li><a href="#one" class="active">About</a></li>
-						<li><a href="#two" >Schooling</a></li>
-						<li><a href="#three">Skills</a></li>
-						<li><a href="#four">Projetcs</a></li>
-						<li><a href="#five">Contact</a></li>
-					</ul>
-				</nav>
-				<footer>
-					<ul class="icons">
-						<li><a href="https://twitter.com/RuturajSolanki6" class="icon brands fa-twitter"><span class="label">Twitter</span></a></li>
-						<li><a href="https://www.facebook.com/people/RutuRaj-Solanki/100009065991171/" class="icon brands fa-facebook-f"><span class="label">Facebook</span></a></li>
-						<li><a href="" class="icon brands fa-reddit"><span class="label">Reddit</span></a></li>
-						<li><a href="https://github.com/robo-codes" class="icon brands fa-github"><span class="label">Github</span></a></li>
-						<li><a href="mailto:ruturajsolanki1115@gmail.com" class="icon solid fa-envelope"><span class="label">Email</span></a></li>
-					</ul>
-				</footer>
-			</section>
+    <main>
+        <section id="home" class="hero">
+            <div class="container">
+                <h1>Weaving Life into Willow</h1>
+                <p class="subtitle">From sustainable farm to finished masterpiece.</p>
+                <a href="#weave" class="cta-button">Explore Our Creations</a>
+            </div>
+        </section>
 
-		<!-- Wrapper -->
-			<div id="wrapper">
+        <section id="weave" class="content-section">
+            <div class="container">
+                <h2>🛍️ The Weave</h2>
+                <p>Discover the utility and natural beauty of our handcrafted willow pieces.</p>
+                <div class="product-grid">
+                    <div class="product-item">
+                        <h3>Baskets</h3>
+                        <p>Durable market, storage, and foraging baskets made to last a lifetime.</p>
+                    </div>
+                    <div class="product-item">
+                        <h3>Ornaments</h3>
+                        <p>Delicate stars, wreaths, and decorative pieces perfect for gifting.</p>
+                    </div>
+                    <div class="product-item">
+                        <h3>Home Decor</h3>
+                        <p>Woven lampshades, wall panels, and functional art to warm your space.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-				<!-- Main -->
-					<div id="main">
+        <section id="lesson" class="content-section lesson-bg">
+            <div class="container">
+                <h2>🌿 The Lesson: Weave Your Own Story</h2>
+                <div class="lesson-details">
+                    <div>
+                        <h3>Kinds of Willows</h3>
+                        <p>Learn about varieties like *Salix triandra* and their unique properties, color, and flexibility.</p>
+                    </div>
+                    <div>
+                        <h3>Weaving Practices</h3>
+                        <p>Master fundamental techniques: slewing, waling, and crafting strong borders.</p>
+                    </div>
+                    <div>
+                        <h3>Tools of the Trade</h3>
+                        <p>Get familiar with bodkins, cleaves, and tapping tools used in traditional weaving.</p>
+                    </div>
+                </div>
+                <a href="#" class="cta-button secondary">View Workshop Schedule</a>
+            </div>
+        </section>
 
-						<!-- One -->
-							<section id="one">
-								<div class="image main" data-position="center">
-									<img src="images/banner_thumb.jpg" alt="" />
-								</div>
-								<div class="container">
-									<header class="major">
-										<h2><a href="https://github.com/robo-codes/robo-codes.github.io" target="_blank">The Nerdy Athlete</a></h2>
-										<p>As the name suggests, this website contains all the information about a nerd who happens to love sports, it also contains some simple projects of <a href="https://github.com/robo-codes" target="_blank" >yours truely</a>.</p>
-									</header>
-									<p></p>
-								</div>
-							</section>
+        <section id="about" class="content-section">
+            <div class="container">
+                <h2>📍 About Us & Connect</h2>
+                <div class="about-content">
+                    <div class="contact-form">
+                        <h3>Contact Us</h3>
+                        <form action="#">
+                            <input type="text" placeholder="Your Name" required>
+                            <input type="email" placeholder="Your Email" required>
+                            <textarea placeholder="Your Message"></textarea>
+                            <button type="submit">Send Message</button>
+                        </form>
+                    </div>
+                    <div class="details">
+                        <h3>Our Philosophy</h3>
+                        <p>We are dedicated to sustainable practices, preserving traditional craftsmanship, and sharing the therapeutic joy of willow weaving with our community.</p>
+                        <h3>Location</h3>
+                        <p>Find us at: [Your Studio/Workshop Address]</p>
+                        <div class="reviews">
+                            <h3>Customer Reviews</h3>
+                            <p>"The basket is stunning and incredibly sturdy—true functional art!" - *Sarah J.*</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
 
-							<section id="two">
-								<div class="container">
-									<h3>Schooling is here !</h3>
-									<p>Here are the details of my teachings till the date.</p>
-									<ul>
-										<li><h2 style="display:inline;"><a href="http://suratxaviers.com/" target="_blank">St.Xavier's High School</a></h2> <h4 style="display:inline;"> Surat.</h4></li>
-										<p>I studied here from junior kindergarten to 12th in science stream in the year 2017.<br>Apart from study, I always loved sports and extracurricular activities. In which I have earned quite the <a href="images/feat.jpeg">feat!</a></p>
-										<p><h4>10th Board: </h4>85%</p>
-										<p><h4>12th Board: </h4>73%</p>
-										<li><h2 style="display:inline;"><a href="https://rngpit.ac.in/" target="_blank">R.N.G. Patel Institute of Technology</a></h2> <h4 style="display: inline;"> Bardoli.</h4></li>
-										<p>I completed my graduation in Computer Science and Engineering from here (which was previously known as FETR) in the year 2021.</p>
-										<p><h4>CGPA :</h4>8.95</p>
-										<li><h2 style="display:inline;"><a href="https://stclaircollege.ca/mystclair" target="_blank">St. Clair College</a></h2> <h4 style="display: inline;"> Canada.</h4></li>
-										<p>I started my Post Graduation Diploma of Data Analysis for Business in January 2023.</p>
-									</ul>
-								</div>
-							</section>
+    <footer>
+        <p>&copy; 2025 Willow Weaves Co. All rights reserved.</p>
+    </footer>
 
-						<!-- Two -->
-							<section id="three">
-								<div class="container">
-									<h3>Wondering what I am good at?</h3>
-									<p>Well, there is not so many things but yeah some are listed below :)</p>
-									<ul>
-										<li><h4>Let's talk about coding.</h4></li><br>
-										<ul class="feature-icons">
-											<li class="icon brands fab fa-python">Python? Sir yes sir</li>
-											<li class="icon solid fa-plus">Tableau? Ofcourse</li>
-											<li class="icon brands fab fa-java">Java? Surely</li>
-											<li class="icon brands fab fa-html5">HTML? Most likely</li>
-											<li class="icon brands fab fa-css3">CSS? Won't say a big fan</li>
-											<li class="icon brands fab fa-php">PHP? A lil bit</li>
-										</ul>
-										<li><h4>It's time for technology</h4></li><br>
-										<ul class="feature-icons">
-											<li class="icon brands fab fa-android">Android? I'll be glad</li>
-											<li class="icon solid fa-robot">Artificial intelligence? Pursuing it</li>
-											<li class="icon solid fa-bolt">Machine Learning? Perfectly fine</li>
-											<li class="icon solid fa-plus">Data Analytics? Well, definitely</li>
-										</ul>
-										<li><h4>Sports Enthusiast Speaking</h4></li>
-										<ul class="feature-icons">
-											<li class="icon solid fa-plus">Cricket</li>
-											<li class="icon solid fa-plus">Basketball</li>
-											<li class="icon solid fa-plus">Soccer</li>
-											<li class="icon solid fa-plus">Bowling</li>
-									</ul>
-
-								</div>
-							</section>
-
-						<!-- Three -->
-							<section id="four">
-								<div class="container">
-									<h3>Projects! finally.</h3>
-									<p>So, here are the projects which I have already developed and many more to come ;)</p>
-									<div class="features">
-										<article>
-											<a href="videos\heart_disease_detection.mp4" class="image"><img src="images/Heart_disease_thumbnail.png" alt="" /></a>
-												<div class="inner">
-													<h4><a href="https://github.com/robo-codes/Heroku_ML_deployment" target="_blank">Heart disease detection using ensemble learning.</a></h4>
-													<p>This was a group project in which we worked in a team of four. Whole project is developed in android and backend is in python. Heroku cloud is used as hosting. </p>
-												</div>
-										</article>
-										<article>
-											<a href="games/The_snake_game.py" class="image"><img src="images/The_snake_game_thumbnail.png" alt="" /></a>
-												<div class="inner">
-													<h4><a href="https://github.com/robo-codes/projects_python/blob/master/python_projects/The_snake_game.py" target="_blank">The Snake Game.</a></h4>
-													<p>Yep, classic Nokia 3310's snake and fruit game in a bit simpler version developed using python turtle library.</p>
-												</div>
-										</article>
-										<article>
-											<a href="images/block_chain_thumbnail.png" class="image"><img src="images/block_chain_thumbnail.png" alt="" /></a>
-											<div class="inner">
-												<h4><a href="https://github.com/robo-codes/Blockchain" target="_blank">Why won't I coin?</a></h4>
-												<p>Cryptocurrency on the hype and me taking some liking is equals to this XD(Well, not so much but just the basic)</p>
-											</div>
-										</article>
-										<article>
-											<a href="images/virtual_assistant_thumbnail.png" class="image"><img src="images/virtual_assistant_thumbnail.png" alt="" /></a>
-											<div class="inner">
-												<h4><a href="reveal.html" target="_blank">Reveal</a></h4>
-												<p>Let's Reveal this!</p>
-											</div>
-										</article>
-									</div>
-								</div>
-							</section>
-
-						<!-- Four -->
-							<section id="five">
-								<div class="container">
-									<h3>End so soon ;(</h3>
-									<p>So, if I can be of any help to you do contact! Also do send details if interested in employing me, It'll be my pleasure. Nevertheless, you can always reach out as a human just to be friends :)</p>
-									<p>Email : <a href="mailto:solankiruturaj11@gmail.com">solankiruturaj11@gmail.com</a>
-									<br>Phone : <a href="tel:12267591110">+1-2267591110</a>
-									</p>
-
-								</div>
-							</section>
-
-					</div>
-
-				<!-- Footer -->
-					<section id="footer">
-						<div class="container">
-							Thanks.
-						</div>
-					</section>
-
-			</div>
-
-		<!-- Scripts -->
-			<script src="assets/js/jquery.min.js"></script>
-			<script src="assets/js/jquery.scrollex.min.js"></script>
-			<script src="assets/js/jquery.scrolly.min.js"></script>
-			<script src="assets/js/browser.min.js"></script>
-			<script src="assets/js/breakpoints.min.js"></script>
-			<script src="assets/js/util.js"></script>
-			<script src="assets/js/main.js"></script>
-
-	</body>
+    <script src="script.js"></script>
+</body>
 </html>

@@ -1,0 +1,282 @@
+/* GENERAL STYLES & RESET */
+:root {
+    --primary-color: #556B2F; /* Dark Olive Green - Earthy tone */
+    --secondary-color: #D2B48C; /* Tan/Light Brown - Willow color */
+    --background-light: #F8F8F8;
+    --text-dark: #333;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    color: var(--text-dark);
+    line-height: 1.6;
+    background-color: white;
+}
+
+h1, h2, h3 {
+    font-family: 'Playfair Display', serif;
+    color: var(--primary-color);
+    margin-bottom: 0.5em;
+}
+
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 0;
+}
+
+/* HEADER & NAVIGATION */
+header {
+    background-color: var(--primary-color);
+    padding: 15px 0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.8em;
+    color: white;
+    font-weight: 700;
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+}
+
+nav ul li a {
+    color: white;
+    text-decoration: none;
+    margin-left: 25px;
+    font-weight: 400;
+    transition: color 0.3s;
+}
+
+nav ul li a:hover {
+    color: var(--secondary-color);
+}
+
+/* CTA BUTTONS */
+.cta-button {
+    display: inline-block;
+    background-color: var(--secondary-color);
+    color: var(--text-dark);
+    padding: 12px 25px;
+    margin-top: 20px;
+    text-decoration: none;
+    font-weight: bold;
+    border-radius: 5px;
+    transition: background-color 0.3s, transform 0.2s;
+    border: 2px solid var(--secondary-color);
+}
+
+.cta-button:hover {
+    background-color: #B8860B; /* Darker tan */
+    transform: translateY(-2px);
+}
+
+.cta-button.secondary {
+    background-color: var(--primary-color);
+    color: white;
+    border-color: var(--primary-color);
+}
+
+.cta-button.secondary:hover {
+    background-color: #445826;
+}
+
+/* SECTION STYLES */
+.content-section {
+    padding: 80px 0;
+    background-color: white;
+}
+
+.content-section:nth-of-type(odd) {
+    background-color: var(--background-light);
+}
+
+/* HOME/HERO SECTION */
+.hero {
+    background: url('images\\farm.jpg') no-repeat center center/cover; 
+    
+    text-align: center;
+    color: white;
+    min-height: 90vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    
+    /* This line is highly recommended for text readability */
+    /* It adds a semi-transparent black layer over the image */
+    box-shadow: inset 0 0 0 1000px rgba(0, 0, 0, 0.3);
+}
+
+.hero .container {
+    /* This pushes the container up by 50 pixels */
+    margin-top: 250px; 
+}
+
+.hero h1 {
+    font-size: 4em;
+    margin-bottom: 0.2em;
+    color: white;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
+}
+
+.hero .subtitle {
+    font-size: 1.5em;
+    margin-bottom: 30px;
+    color: #fff;
+    font-weight: 300;
+}
+
+/* THE WEAVE SECTION */
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    margin-top: 40px;
+    text-align: center;
+}
+
+.product-item {
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    transition: transform 0.3s;
+}
+
+.product-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* THE LESSON SECTION */
+.lesson-bg {
+    background-color: #E8F0E8; /* Lighter green hint */
+}
+
+.lesson-details {
+    display: flex;
+    justify-content: space-between;
+    gap: 30px;
+    margin-top: 40px;
+    text-align: center;
+}
+
+.lesson-details > div {
+    flex: 1;
+    padding: 20px;
+    border-left: 3px solid var(--primary-color);
+    text-align: left;
+}
+
+/* ABOUT US SECTION */
+.about-content {
+    display: flex;
+    gap: 50px;
+    margin-top: 40px;
+    flex-wrap: wrap;
+}
+
+.contact-form, .details {
+    flex: 1;
+    min-width: 300px;
+}
+
+.contact-form input[type="text"],
+.contact-form input[type="email"],
+.contact-form textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1em;
+}
+
+.contact-form textarea {
+    height: 150px;
+    resize: vertical;
+}
+
+.contact-form button {
+    background-color: var(--primary-color);
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1.1em;
+    transition: background-color 0.3s;
+}
+
+.contact-form button:hover {
+    background-color: #445826;
+}
+
+.reviews {
+    margin-top: 30px;
+    border-top: 1px solid #ccc;
+    padding-top: 20px;
+}
+
+/* FOOTER */
+footer {
+    background-color: var(--text-dark);
+    color: white;
+    text-align: center;
+    padding: 20px 0;
+    font-size: 0.9em;
+}
+
+/* RESPONSIVENESS */
+@media (max-width: 768px) {
+    nav {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    nav ul {
+        margin-top: 15px;
+        padding: 0;
+    }
+
+    nav ul li a {
+        margin: 0 10px;
+    }
+
+    .hero h1 {
+        font-size: 3em;
+    }
+
+    .lesson-details {
+        flex-direction: column;
+    }
+
+    .lesson-details > div {
+        border-left: none;
+        border-bottom: 2px solid var(--primary-color);
+        padding-bottom: 15px;
+    }
+}
