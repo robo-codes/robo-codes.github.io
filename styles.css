@@ -116,7 +116,7 @@ nav ul li a:hover {
 
 /* HOME/HERO SECTION */
 .hero {
-    background: url('images\\farm.jpg') no-repeat center center/cover; 
+    background: url('images/farm.jpg') no-repeat center center/cover; 
     
     text-align: center;
     color: white;
@@ -279,4 +279,5 @@ footer {
         border-bottom: 2px solid var(--primary-color);
         padding-bottom: 15px;
     }
+
 }
