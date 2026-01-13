@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Let's Business - PDF Chat</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: #ffffff;
+            height: 100vh;
+            overflow: hidden;
+        }
+        
+        .main-container {
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+        
+        /* Header */
+        .header {
+            background: white;
+            border-bottom: 1px solid #e5e5e5;
+            padding: 12px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .logo {
+            width: 36px;
+            height: 36px;
+            object-fit: contain;
+        }
+        
+        .logo-text {
+            font-size: 18px;
+            font-weight: 600;
+            color: #2d2d2d;
+        }
+        
+        .upload-btn {
+            background: #2d2d2d;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: background 0.2s;
+        }
+        
+        .upload-btn:hover {
+            background: #1a1a1a;
+        }
+        
+        .file-input {
+            display: none;
+        }
+        
+        /* Chat Area */
+        .chat-area {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        
+        .messages-container {
+            flex: 1;
+            overflow-y: auto;
+            padding: 24px;
+        }
+        
+        .messages-wrapper {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        /* Welcome Screen */
+        .welcome-screen {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 60vh;
+            text-align: center;
+            color: white;
+        }
+        
+        .welcome-logo {
+            width: 120px;
+            height: 120px;
+            margin-bottom: 32px;
+            object-fit: contain;
+        }
+        
+        .welcome-title {
+            font-size: 36px;
+            font-weight: 600;
+            color: #2d2d2d;
+            margin-bottom: 12px;
+        }
+        
+        .welcome-subtitle {
+            font-size: 18px;
+            color: #666;
+            margin-bottom: 40px;
+        }
+        
+        .upload-area {
+            border: 2px dashed #d0d0d0;
+            border-radius: 16px;
+            padding: 60px 80px;
+            background: rgb(228, 228, 228);
+            cursor: pointer;
+            transition: all 0.3s;
+            max-width: 600px;
+        }
+        
+        .upload-area:hover {
+            border-color: #2d7a9e;
+            background: #fafafa;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+        }
+        
+        .upload-area.dragover {
+            border-color: #2d7a9e;
+            background: rgb(241, 241, 241);
+            transform: translateY(-2px);
+        }
+        
+        .upload-icon {
+            font-size: 48px;
+            margin-bottom: 16px;
+        }
+        
+        .upload-text {
+            font-size: 18px;
+            color: #2d2d2d;
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+        
+        .upload-hint {
+            font-size: 14px;
+            color: #888;
+        }
+        
+        .file-name-display {
+            margin-top: 16px;
+            padding: 12px 20px;
+            background: #f0f8ff;
+            border-radius: 8px;
+            color: #2d7a9e;
+            font-weight: 500;
+            display: none;
+        }
+        
+        .file-name-display.active {
+            display: block;
+        }
+        
+        /* Messages */
+        .message {
+            margin-bottom: 24px;
+            display: flex;
+            gap: 12px;
+            animation: fadeIn 0.3s ease-in;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .message.user {
+            flex-direction: row-reverse;
+        }
+        
+        .message-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            flex-shrink: 0;
+        }
+        
+        .message.bot .message-avatar {
+            background: linear-gradient(135deg, #2d7a9e 0%, #f4a261 100%);
+            color: white;
+        }
+        
+        .message.user .message-avatar {
+            background: #2d2d2d;
+            color: white;
+        }
+        
+        .message-content {
+            max-width: 70%;
+            padding: 16px 20px;
+            border-radius: 16px;
+            line-height: 1.6;
+        }
+        
+        .message.user .message-content {
+            background: #2d2d2d;
+            color: white;
+            border-bottom-right-radius: 4px;
+        }
+        
+        .message.bot .message-content {
+            background: white;
+            color: #2d2d2d;
+            border-bottom-left-radius: 4px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+        }
+        
+        .message-content p {
+            margin-bottom: 12px;
+        }
+        
+        .message-content p:last-child {
+            margin-bottom: 0;
+        }
+        
+        .message-content ul,
+        .message-content ol {
+            margin: 12px 0;
+            padding-left: 20px;
+        }
+        
+        .message-content li {
+            margin-bottom: 8px;
+            line-height: 1.6;
+        }
+        
+        .message-content strong {
+            color: #2d7a9e;
+            font-weight: 600;
+        }
+        
+        .message.user .message-content strong {
+            color: #f4a261;
+        }
+        
+        /* Input Area */
+        .input-area {
+            background: white;
+            border-top: 1px solid #e5e5e5;
+            padding: 20px 24px;
+        }
+        
+        .input-wrapper {
+            max-width: 800px;
+            margin: 0 auto;
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+        
+        .input-box {
+            flex: 1;
+            padding: 14px 20px;
+            border: 1px solid #e5e5e5;
+            border-radius: 24px;
+            font-size: 15px;
+            outline: none;
+            transition: all 0.2s;
+            background: #fafafa;
+        }
+        
+        .input-box:focus {
+            border-color: #2d7a9e;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(45, 122, 158, 0.1);
+        }
+        
+        .input-box:disabled {
+            background: #f5f5f5;
+            cursor: not-allowed;
+        }
+        
+        .send-btn {
+            background: #2d7a9e;
+            color: white;
+            border: none;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+            flex-shrink: 0;
+        }
+        
+        .send-btn:hover:not(:disabled) {
+            background: #245c7a;
+            transform: scale(1.05);
+        }
+        
+        .send-btn:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+        
+        /* Loading animation */
+        .loading {
+            display: inline-flex;
+            gap: 4px;
+            align-items: center;
+        }
+        
+        .loading-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #2d7a9e;
+            animation: bounce 1.4s infinite ease-in-out;
+        }
+        
+        .loading-dot:nth-child(1) { animation-delay: -0.32s; }
+        .loading-dot:nth-child(2) { animation-delay: -0.16s; }
+        
+        @keyframes bounce {
+            0%, 80%, 100% { transform: scale(0); opacity: 0.5; }
+            40% { transform: scale(1); opacity: 1; }
+        }
+        
+        /* Scrollbar */
+        .messages-container::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        .messages-container::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        
+        .messages-container::-webkit-scrollbar-thumb {
+            background: #d0d0d0;
+            border-radius: 4px;
+        }
+        
+        .messages-container::-webkit-scrollbar-thumb:hover {
+            background: #b0b0b0;
+        }
+    </style>
+</head>
+<body>
+    <div class="main-container">
+        <!-- Header -->
+        <div class="header">
+            <div class="logo-section">
+                <img src="Logo.jpg" alt="Let's Business" class="logo">
+                <span class="logo-text">Inverness County</span>
+            </div>
+            <button class="upload-btn" id="headerUploadBtn">
+                <span>📄</span>
+                <span>Upload PDF</span>
+            </button>
+            <input type="file" id="fileInput" class="file-input" accept=".pdf">
+        </div>
+
+        <!-- Chat Area -->
+        <div class="chat-area">
+            <div class="messages-container" id="messagesContainer">
+                <div class="messages-wrapper" id="messagesWrapper">
+                    <!-- Welcome Screen -->
+                    <div class="welcome-screen" id="welcomeScreen">
+                        <img src="Logo.jpg" alt="Let's Business" class="welcome-logo">
+                        <h1 class="welcome-title">Let's Business</h1>
+                        <p class="welcome-subtitle">Upload a PDF and start asking questions</p>
+                        <div class="upload-area" id="uploadArea">
+                            <div class="upload-icon">📄</div>
+                            <div class="upload-text">Click or drag your PDF here</div>
+                            <div class="upload-hint">Supports PDF files up to 50MB</div>
+                            <div class="file-name-display" id="fileNameDisplay"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Input Area -->
+            <div class="input-area">
+                <div class="input-wrapper">
+                    <input 
+                        type="text" 
+                        class="input-box" 
+                        id="messageInput" 
+                        placeholder="Ask anything about your PDF..."
+                        disabled
+                    >
+                    <button class="send-btn" id="sendBtn" disabled>
+                        <span>↑</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const fileInput = document.getElementById('fileInput');
+        const headerUploadBtn = document.getElementById('headerUploadBtn');
+        const uploadArea = document.getElementById('uploadArea');
+        const fileNameDisplay = document.getElementById('fileNameDisplay');
+        const welcomeScreen = document.getElementById('welcomeScreen');
+        const messagesWrapper = document.getElementById('messagesWrapper');
+        const messagesContainer = document.getElementById('messagesContainer');
+        const messageInput = document.getElementById('messageInput');
+        const sendBtn = document.getElementById('sendBtn');
+        
+        let pdfUploaded = false;
+        let docId = '';
+        
+        // Upload handlers
+        headerUploadBtn.addEventListener('click', () => fileInput.click());
+        uploadArea.addEventListener('click', () => fileInput.click());
+        
+        uploadArea.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            uploadArea.classList.add('dragover');
+        });
+        
+        uploadArea.addEventListener('dragleave', () => {
+            uploadArea.classList.remove('dragover');
+        });
+        
+        uploadArea.addEventListener('drop', (e) => {
+            e.preventDefault();
+            uploadArea.classList.remove('dragover');
+            const file = e.dataTransfer.files[0];
+            if (file && file.type === 'application/pdf') {
+                handleFile(file);
+            }
+        });
+        
+        fileInput.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (file) handleFile(file);
+        });
+        
+        async function handleFile(file) {
+            fileNameDisplay.textContent = `📄 ${file.name}`;
+            fileNameDisplay.classList.add('active');
+            
+            welcomeScreen.style.display = 'none';
+            addMessage('bot', 'Processing your PDF... Please wait.');
+            
+            const formData = new FormData();
+            formData.append('pdf', file);
+            
+            try {
+                const response = await fetch('http://localhost:3000/upload', {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    docId = data.docId;
+                    pdfUploaded = true;
+                    messageInput.disabled = false;
+                    sendBtn.disabled = false;
+                    addMessage('bot', `✅ PDF processed successfully! Created ${data.chunks} searchable chunks from ${data.pages} pages. You can now ask questions!`);
+                    messageInput.focus();
+                } else {
+                    addMessage('bot', '❌ Error processing PDF. Please try again.');
+                }
+            } catch (error) {
+                addMessage('bot', '❌ Error uploading PDF. Make sure the server is running.');
+                console.error(error);
+            }
+        }
+        
+        // Chat handlers
+        sendBtn.addEventListener('click', sendMessage);
+        messageInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter' && !sendBtn.disabled) {
+                sendMessage();
+            }
+        });
+        
+        async function sendMessage() {
+            const question = messageInput.value.trim();
+            if (!question || !pdfUploaded) return;
+            
+            addMessage('user', question);
+            messageInput.value = '';
+            sendBtn.disabled = true;
+            messageInput.disabled = true;
+            
+            const loadingMsg = addMessage('bot', '<div class="loading"><div class="loading-dot"></div><div class="loading-dot"></div><div class="loading-dot"></div></div>');
+            
+            try {
+                const response = await fetch('http://localhost:3000/ask', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ question, docId })
+                });
+                
+                const data = await response.json();
+                loadingMsg.remove();
+                
+                if (data.success) {
+                    addMessage('bot', data.answer);
+                } else {
+                    addMessage('bot', '❌ Error: ' + data.error);
+                }
+            } catch (error) {
+                loadingMsg.remove();
+                addMessage('bot', '❌ Error connecting to server.');
+                console.error(error);
+            }
+            
+            sendBtn.disabled = false;
+            messageInput.disabled = false;
+            messageInput.focus();
+        }
+        
+        function addMessage(type, content) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${type}`;
+            
+            const avatar = document.createElement('div');
+            avatar.className = 'message-avatar';
+            avatar.textContent = type === 'bot' ? '🌊' : '👤';
+            
+            let formattedContent = content;
+            
+            if (type === 'bot' && !content.includes('<div class="loading">')) {
+                formattedContent = formattedContent.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+                
+                if (formattedContent.includes('•')) {
+                    const lines = formattedContent.split('\n');
+                    let inList = false;
+                    const formatted = [];
+                    
+                    for (let line of lines) {
+                        if (line.trim().startsWith('•')) {
+                            if (!inList) {
+                                formatted.push('<ul>');
+                                inList = true;
+                            }
+                            formatted.push('<li>' + line.replace('•', '').trim() + '</li>');
+                        } else {
+                            if (inList) {
+                                formatted.push('</ul>');
+                                inList = false;
+                            }
+                            formatted.push(line);
+                        }
+                    }
+                    if (inList) formatted.push('</ul>');
+                    formattedContent = formatted.join('\n');
+                }
+                
+                formattedContent = formattedContent.split('\n\n').map(para => {
+                    if (!para.trim().startsWith('<ul>') && !para.trim().startsWith('<ol>') && para.trim()) {
+                        return '<p>' + para.trim() + '</p>';
+                    }
+                    return para;
+                }).join('');
+                
+                formattedContent = formattedContent.replace(/\n/g, '<br>');
+            }
+            
+            const contentDiv = document.createElement('div');
+            contentDiv.className = 'message-content';
+            contentDiv.innerHTML = formattedContent;
+            
+            messageDiv.appendChild(avatar);
+            messageDiv.appendChild(contentDiv);
+            messagesWrapper.appendChild(messageDiv);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+            
+            return messageDiv;
+        }
+    </script>
+</body>
+</html>
