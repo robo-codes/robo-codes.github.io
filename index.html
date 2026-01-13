@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Potato Blight Risk Predictor - Cape Breton</title>
+    <title>Let's Business - PDF Chat</title>
     <style>
         * {
             margin: 0;
@@ -12,89 +12,178 @@
         }
         
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: linear-gradient(135deg, #e8f5e9 0%, #e3f2fd 100%);
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: #ffffff;
             height: 100vh;
+            overflow: hidden;
+        }
+        
+        .main-container {
             display: flex;
             flex-direction: column;
+            height: 100vh;
         }
         
+        /* Header */
         .header {
             background: white;
-            padding: 20px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-        }
-        
-        .header-content {
-            max-width: 1200px;
-            margin: 0 auto;
+            border-bottom: 1px solid #e5e5e5;
+            padding: 12px 24px;
             display: flex;
+            align-items: center;
             justify-content: space-between;
-            align-items: center;
         }
         
-        .title {
+        .logo-section {
             display: flex;
             align-items: center;
-            gap: 15px;
+            gap: 12px;
         }
         
-        .icon {
-            width: 40px;
-            height: 40px;
-            color: #2e7d32;
+        .logo {
+            width: 36px;
+            height: 36px;
+            object-fit: contain;
         }
         
-        h1 {
-            font-size: 24px;
-            color: #1b5e20;
-        }
-        
-        .subtitle {
-            font-size: 14px;
-            color: #666;
+        .logo-text {
+            font-size: 18px;
+            font-weight: 600;
+            color: #2d2d2d;
         }
         
         .upload-btn {
-            background: #2e7d32;
+            background: #2d2d2d;
             color: white;
-            padding: 12px 24px;
             border: none;
-            border-radius: 8px;
+            padding: 8px 16px;
+            border-radius: 6px;
             cursor: pointer;
             font-size: 14px;
             font-weight: 500;
             display: flex;
             align-items: center;
             gap: 8px;
+            transition: background 0.2s;
         }
         
         .upload-btn:hover {
-            background: #1b5e20;
+            background: #1a1a1a;
         }
         
-        .data-loaded {
-            color: #2e7d32;
-            font-weight: 600;
-            font-size: 14px;
+        .file-input {
+            display: none;
         }
         
-        .chat-container {
+        /* Chat Area */
+        .chat-area {
             flex: 1;
-            overflow-y: auto;
-            padding: 20px;
-        }
-        
-        .messages {
-            max-width: 1200px;
-            margin: 0 auto;
             display: flex;
             flex-direction: column;
-            gap: 16px;
+            overflow: hidden;
         }
         
-        .message {
+        .messages-container {
+            flex: 1;
+            overflow-y: auto;
+            padding: 24px;
+        }
+        
+        .messages-wrapper {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        /* Welcome Screen */
+        .welcome-screen {
             display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 60vh;
+            text-align: center;
+            color: white;
+        }
+        
+        .welcome-logo {
+            width: 120px;
+            height: 120px;
+            margin-bottom: 32px;
+            object-fit: contain;
+        }
+        
+        .welcome-title {
+            font-size: 36px;
+            font-weight: 600;
+            color: #2d2d2d;
+            margin-bottom: 12px;
+        }
+        
+        .welcome-subtitle {
+            font-size: 18px;
+            color: #666;
+            margin-bottom: 40px;
+        }
+        
+        .upload-area {
+            border: 2px dashed #d0d0d0;
+            border-radius: 16px;
+            padding: 60px 80px;
+            background: rgb(228, 228, 228);
+            cursor: pointer;
+            transition: all 0.3s;
+            max-width: 600px;
+        }
+        
+        .upload-area:hover {
+            border-color: #2d7a9e;
+            background: #fafafa;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+        }
+        
+        .upload-area.dragover {
+            border-color: #2d7a9e;
+            background: rgb(241, 241, 241);
+            transform: translateY(-2px);
+        }
+        
+        .upload-icon {
+            font-size: 48px;
+            margin-bottom: 16px;
+        }
+        
+        .upload-text {
+            font-size: 18px;
+            color: #2d2d2d;
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+        
+        .upload-hint {
+            font-size: 14px;
+            color: #888;
+        }
+        
+        .file-name-display {
+            margin-top: 16px;
+            padding: 12px 20px;
+            background: #f0f8ff;
+            border-radius: 8px;
+            color: #2d7a9e;
+            font-weight: 500;
+            display: none;
+        }
+        
+        .file-name-display.active {
+            display: block;
+        }
+        
+        /* Messages */
+        .message {
+            margin-bottom: 24px;
+            display: flex;
+            gap: 12px;
             animation: fadeIn 0.3s ease-in;
         }
         
@@ -104,750 +193,413 @@
         }
         
         .message.user {
-            justify-content: flex-end;
+            flex-direction: row-reverse;
         }
         
-        .message.assistant {
-            justify-content: flex-start;
+        .message-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            flex-shrink: 0;
+        }
+        
+        .message.bot .message-avatar {
+            background: linear-gradient(135deg, #2d7a9e 0%, #f4a261 100%);
+            color: white;
+        }
+        
+        .message.user .message-avatar {
+            background: #2d2d2d;
+            color: white;
         }
         
         .message-content {
             max-width: 70%;
-            padding: 16px;
-            border-radius: 12px;
-            white-space: pre-line;
+            padding: 16px 20px;
+            border-radius: 16px;
             line-height: 1.6;
         }
         
         .message.user .message-content {
-            background: #2e7d32;
+            background: #2d2d2d;
             color: white;
+            border-bottom-right-radius: 4px;
         }
         
-        .message.assistant .message-content {
+        .message.bot .message-content {
             background: white;
-            color: #333;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            color: #2d2d2d;
+            border-bottom-left-radius: 4px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
         }
         
-        .assistant-label {
-            font-size: 12px;
-            color: #2e7d32;
-            font-weight: 600;
+        .message-content p {
+            margin-bottom: 12px;
+        }
+        
+        .message-content p:last-child {
+            margin-bottom: 0;
+        }
+        
+        .message-content ul,
+        .message-content ol {
+            margin: 12px 0;
+            padding-left: 20px;
+        }
+        
+        .message-content li {
             margin-bottom: 8px;
-            display: flex;
-            align-items: center;
-            gap: 6px;
+            line-height: 1.6;
         }
         
-        .input-container {
+        .message-content strong {
+            color: #2d7a9e;
+            font-weight: 600;
+        }
+        
+        .message.user .message-content strong {
+            color: #f4a261;
+        }
+        
+        /* Input Area */
+        .input-area {
             background: white;
-            border-top: 1px solid #ddd;
-            padding: 20px;
+            border-top: 1px solid #e5e5e5;
+            padding: 20px 24px;
         }
         
         .input-wrapper {
-            max-width: 1200px;
+            max-width: 800px;
             margin: 0 auto;
             display: flex;
             gap: 12px;
+            align-items: center;
         }
         
-        input[type="text"] {
+        .input-box {
             flex: 1;
-            padding: 14px;
-            border: 2px solid #e0e0e0;
-            border-radius: 8px;
-            font-size: 14px;
+            padding: 14px 20px;
+            border: 1px solid #e5e5e5;
+            border-radius: 24px;
+            font-size: 15px;
             outline: none;
+            transition: all 0.2s;
+            background: #fafafa;
         }
         
-        input[type="text"]:focus {
-            border-color: #2e7d32;
+        .input-box:focus {
+            border-color: #2d7a9e;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(45, 122, 158, 0.1);
         }
         
-        .send-btn {
-            background: #2e7d32;
-            color: white;
-            padding: 14px 32px;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 14px;
-            font-weight: 600;
-        }
-        
-        .send-btn:hover:not(:disabled) {
-            background: #1b5e20;
-        }
-        
-        .send-btn:disabled {
-            background: #ccc;
+        .input-box:disabled {
+            background: #f5f5f5;
             cursor: not-allowed;
         }
         
-        .loading {
+        .send-btn {
+            background: #2d7a9e;
+            color: white;
+            border: none;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 20px;
             display: flex;
             align-items: center;
-            gap: 8px;
-            color: #666;
+            justify-content: center;
+            transition: all 0.2s;
+            flex-shrink: 0;
         }
         
-        .spinner {
-            width: 16px;
-            height: 16px;
-            border: 2px solid #e0e0e0;
-            border-top-color: #2e7d32;
+        .send-btn:hover:not(:disabled) {
+            background: #245c7a;
+            transform: scale(1.05);
+        }
+        
+        .send-btn:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+        
+        /* Loading animation */
+        .loading {
+            display: inline-flex;
+            gap: 4px;
+            align-items: center;
+        }
+        
+        .loading-dot {
+            width: 8px;
+            height: 8px;
             border-radius: 50%;
-            animation: spin 0.8s linear infinite;
+            background: #2d7a9e;
+            animation: bounce 1.4s infinite ease-in-out;
         }
         
-        @keyframes spin {
-            to { transform: rotate(360deg); }
+        .loading-dot:nth-child(1) { animation-delay: -0.32s; }
+        .loading-dot:nth-child(2) { animation-delay: -0.16s; }
+        
+        @keyframes bounce {
+            0%, 80%, 100% { transform: scale(0); opacity: 0.5; }
+            40% { transform: scale(1); opacity: 1; }
         }
         
-        input[type="file"] {
-            display: none;
+        /* Scrollbar */
+        .messages-container::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        .messages-container::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        
+        .messages-container::-webkit-scrollbar-thumb {
+            background: #d0d0d0;
+            border-radius: 4px;
+        }
+        
+        .messages-container::-webkit-scrollbar-thumb:hover {
+            background: #b0b0b0;
         }
     </style>
 </head>
 <body>
-    <div class="header">
-        <div class="header-content">
-            <div class="title">
-                <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
-                </svg>
-                <div>
-                    <h1>Potato Blight Risk Predictor</h1>
-                    <div class="subtitle">Smart Weather-Based Analysis</div>
-                </div>
+    <div class="main-container">
+        <!-- Header -->
+        <div class="header">
+            <div class="logo-section">
+                <img src="Logo.jpg" alt="Let's Business" class="logo">
+                <span class="logo-text">Inverness County</span>
             </div>
-            <div id="uploadArea">
-                <label for="fileInput" class="upload-btn">
-                    <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
-                    </svg>
-                    Upload Data
-                </label>
-                <input type="file" id="fileInput" accept=".csv,.tsv,.txt">
-            </div>
+            <button class="upload-btn" id="headerUploadBtn">
+                <span>📄</span>
+                <span>Upload PDF</span>
+            </button>
+            <input type="file" id="fileInput" class="file-input" accept=".pdf">
         </div>
-    </div>
 
-    <div class="chat-container" id="chatContainer">
-        <div class="messages" id="messages">
-            <div class="message assistant">
-                <div class="message-content">
-                    <div class="assistant-label">
-                        <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
-                        </svg>
-                        Assistant
+        <!-- Chat Area -->
+        <div class="chat-area">
+            <div class="messages-container" id="messagesContainer">
+                <div class="messages-wrapper" id="messagesWrapper">
+                    <!-- Welcome Screen -->
+                    <div class="welcome-screen" id="welcomeScreen">
+                        <img src="Logo.jpg" alt="Let's Business" class="welcome-logo">
+                        <h1 class="welcome-title">Let's Business</h1>
+                        <p class="welcome-subtitle">Upload a PDF and start asking questions</p>
+                        <div class="upload-area" id="uploadArea">
+                            <div class="upload-icon">📄</div>
+                            <div class="upload-text">Click or drag your PDF here</div>
+                            <div class="upload-hint">Supports PDF files up to 50MB</div>
+                            <div class="file-name-display" id="fileNameDisplay"></div>
+                        </div>
                     </div>
-                    Hi! 👋 I'm your potato blight risk assistant.
-
-Just ask me questions like:
-• "What's the blight risk in Sydney, NS next week?"
-• "Show me risk for Baddeck from June to August"
-• "Analyze Halifax for the past month"
-• "What about Cape Breton tomorrow?"
-
-I'll fetch weather data and analyze blight risk for any location and time period!
                 </div>
             </div>
-        </div>
-    </div>
 
-    <div class="input-container">
-        <div class="input-wrapper">
-            <input 
-                type="text" 
-                id="userInput" 
-                placeholder="Ask about blight risk... e.g., 'What's the risk in Sydney, NS next week?'"
-            >
-            <button class="send-btn" id="sendBtn">Send</button>
+            <!-- Input Area -->
+            <div class="input-area">
+                <div class="input-wrapper">
+                    <input 
+                        type="text" 
+                        class="input-box" 
+                        id="messageInput" 
+                        placeholder="Ask anything about your PDF..."
+                        disabled
+                    >
+                    <button class="send-btn" id="sendBtn" disabled>
+                        <span>↑</span>
+                    </button>
+                </div>
+            </div>
         </div>
     </div>
 
     <script>
-        let weatherData = null;
-        let analysisResults = null;
-
-        // Major cities/locations in Nova Scotia with fallbacks
-        const LOCATION_MAPPINGS = {
-            'nova scotia': { name: 'Halifax', lat: 44.6488, lon: -63.5752 },
-            'ns': { name: 'Halifax', lat: 44.6488, lon: -63.5752 },
-            'halifax': { name: 'Halifax', lat: 44.6488, lon: -63.5752 },
-            'sydney': { name: 'Sydney', lat: 46.1368, lon: -60.1942 },
-            'cape breton': { name: 'Sydney', lat: 46.1368, lon: -60.1942 },
-            'baddeck': { name: 'Baddeck', lat: 46.0994, lon: -60.7525 },
-            'truro': { name: 'Truro', lat: 45.3674, lon: -63.2755 },
-            'yarmouth': { name: 'Yarmouth', lat: 43.8377, lon: -66.1175 },
-            'antigonish': { name: 'Antigonish', lat: 45.6219, lon: -61.9977 },
-            'inverness': { name: 'Inverness', lat: 46.1999, lon: -61.1086 },
-            'glace bay': { name: 'Glace Bay', lat: 46.1968, lon: -59.9570 }
-        };
-
-        // Geocode location using Nominatim
-        async function geocodeLocation(locationText) {
-            // Normalize and fix common typos
-            const normalized = locationText.toLowerCase().trim()
-                .replace(/sydeny/g, 'sydney')
-                .replace(/hallifax/g, 'halifax')
-                .replace(/baddek/g, 'baddeck');
-            
-            // Check if it's a known location first
-            for (const [key, value] of Object.entries(LOCATION_MAPPINGS)) {
-                if (normalized.includes(key)) {
-                    return value;
-                }
+        const fileInput = document.getElementById('fileInput');
+        const headerUploadBtn = document.getElementById('headerUploadBtn');
+        const uploadArea = document.getElementById('uploadArea');
+        const fileNameDisplay = document.getElementById('fileNameDisplay');
+        const welcomeScreen = document.getElementById('welcomeScreen');
+        const messagesWrapper = document.getElementById('messagesWrapper');
+        const messagesContainer = document.getElementById('messagesContainer');
+        const messageInput = document.getElementById('messageInput');
+        const sendBtn = document.getElementById('sendBtn');
+        
+        let pdfUploaded = false;
+        let docId = '';
+        
+        // Upload handlers
+        headerUploadBtn.addEventListener('click', () => fileInput.click());
+        uploadArea.addEventListener('click', () => fileInput.click());
+        
+        uploadArea.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            uploadArea.classList.add('dragover');
+        });
+        
+        uploadArea.addEventListener('dragleave', () => {
+            uploadArea.classList.remove('dragover');
+        });
+        
+        uploadArea.addEventListener('drop', (e) => {
+            e.preventDefault();
+            uploadArea.classList.remove('dragover');
+            const file = e.dataTransfer.files[0];
+            if (file && file.type === 'application/pdf') {
+                handleFile(file);
             }
-
-            // Try geocoding
+        });
+        
+        fileInput.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (file) handleFile(file);
+        });
+        
+        async function handleFile(file) {
+            fileNameDisplay.textContent = `📄 ${file.name}`;
+            fileNameDisplay.classList.add('active');
+            
+            welcomeScreen.style.display = 'none';
+            addMessage('bot', 'Processing your PDF... Please wait.');
+            
+            const formData = new FormData();
+            formData.append('pdf', file);
+            
             try {
-                const response = await fetch(
-                    `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(locationText)}, Nova Scotia, Canada&limit=1`,
-                    { headers: { 'User-Agent': 'BlightPredictor/1.0' } }
-                );
+                const response = await fetch('https://chat-cape-breton.onrender.com/upload', {
+                    method: 'POST',
+                    body: formData
+                });
+                
                 const data = await response.json();
-                if (data && data.length > 0) {
-                    return {
-                        name: data[0].display_name.split(',')[0],
-                        lat: parseFloat(data[0].lat),
-                        lon: parseFloat(data[0].lon)
-                    };
+                
+                if (data.success) {
+                    docId = data.docId;
+                    pdfUploaded = true;
+                    messageInput.disabled = false;
+                    sendBtn.disabled = false;
+                    addMessage('bot', `✅ PDF processed successfully! Created ${data.chunks} searchable chunks from ${data.pages} pages. You can now ask questions!`);
+                    messageInput.focus();
+                } else {
+                    addMessage('bot', '❌ Error processing PDF. Please try again.');
                 }
             } catch (error) {
-                console.error('Geocoding error:', error);
-            }
-            return null;
-        }
-
-        // Parse time expressions
-        function parseTimeExpression(text) {
-            const now = new Date();
-            const lowerText = text.toLowerCase();
-
-            // Questions about "last blight" - look at previous growing season
-            if (lowerText.includes('last blight') || lowerText.includes('last period')) {
-                const year = now.getMonth() < 5 ? now.getFullYear() - 1 : now.getFullYear();
-                const start = new Date(year, 5, 1); // June 1
-                const end = new Date(year, 8, 30); // Sept 30
-                return { start, end, type: 'past', days: 122, season: true };
-            }
-
-            // Questions about "next blight" - look at upcoming growing season
-            if (lowerText.includes('next blight') || lowerText.includes('next occur') || lowerText.includes('could occur')) {
-                const year = now.getMonth() < 5 ? now.getFullYear() : now.getFullYear() + 1;
-                const start = new Date(year, 5, 1); // June 1
-                const end = new Date(year, 8, 30); // Sept 30
-                return { start, end, type: 'future', days: 122, season: true, nextSeason: true };
-            }
-
-            // Future
-            if (lowerText.includes('tomorrow')) {
-                const tomorrow = new Date(now);
-                tomorrow.setDate(tomorrow.getDate() + 1);
-                return { start: tomorrow, end: tomorrow, type: 'future', days: 1 };
-            }
-            if (lowerText.includes('next week')) {
-                const start = new Date(now);
-                const end = new Date(now);
-                end.setDate(end.getDate() + 7);
-                return { start, end, type: 'future', days: 7 };
-            }
-            if (lowerText.includes('next month')) {
-                const start = new Date(now);
-                const end = new Date(now);
-                end.setMonth(end.getMonth() + 1);
-                return { start, end, type: 'future', days: 30 };
-            }
-
-            // Past
-            if (lowerText.includes('yesterday')) {
-                const yesterday = new Date(now);
-                yesterday.setDate(yesterday.getDate() - 1);
-                return { start: yesterday, end: yesterday, type: 'past', days: 1 };
-            }
-            if (lowerText.includes('past week') || lowerText.includes('last week')) {
-                const start = new Date(now);
-                start.setDate(start.getDate() - 7);
-                return { start, end: now, type: 'past', days: 7 };
-            }
-            if (lowerText.includes('past month') || lowerText.includes('last month')) {
-                const start = new Date(now);
-                start.setMonth(start.getMonth() - 1);
-                return { start, end: now, type: 'past', days: 30 };
-            }
-            if (lowerText.includes('past summer') || lowerText.includes('last summer')) {
-                const year = now.getMonth() < 5 ? now.getFullYear() - 1 : now.getFullYear();
-                const start = new Date(year, 5, 1);
-                const end = new Date(year, 8, 30);
-                return { start, end, type: 'past', days: 122, season: true };
-            }
-
-            // Specific months
-            const months = ['january', 'february', 'march', 'april', 'may', 'june', 'july', 'august', 'september', 'october', 'november', 'december'];
-            for (let i = 0; i < months.length; i++) {
-                if (lowerText.includes(months[i])) {
-                    // Determine year - if month already passed this year, use this year, otherwise last year
-                    let year = now.getFullYear();
-                    if (i > now.getMonth()) {
-                        year = year - 1; // Month hasn't happened yet this year, use last year
-                    }
-                    const start = new Date(year, i, 1);
-                    const end = new Date(year, i + 1, 0);
-                    const isPast = end < now;
-                    return { start, end, type: isPast ? 'past' : 'future', days: end.getDate() };
-                }
-            }
-
-            // Default: check current month (winter = show it's winter, summer = show current risk)
-            if (now.getMonth() >= 4 && now.getMonth() <= 8) {
-                // May-September: show next 7 days
-                const end = new Date(now);
-                end.setDate(end.getDate() + 7);
-                return { start: now, end, type: 'future', days: 7 };
-            } else {
-                // Winter: show last growing season
-                const year = now.getMonth() < 5 ? now.getFullYear() - 1 : now.getFullYear();
-                const start = new Date(year, 5, 1);
-                const end = new Date(year, 8, 30);
-                return { start, end, type: 'past', days: 122, season: true };
+                addMessage('bot', '❌ Error uploading PDF. Make sure the server is running.');
+                console.error(error);
             }
         }
-
-        // Fetch weather data from Open-Meteo
-        async function fetchWeatherData(lat, lon, timeRange) {
+        
+        // Chat handlers
+        sendBtn.addEventListener('click', sendMessage);
+        messageInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter' && !sendBtn.disabled) {
+                sendMessage();
+            }
+        });
+        
+        async function sendMessage() {
+            const question = messageInput.value.trim();
+            if (!question || !pdfUploaded) return;
+            
+            addMessage('user', question);
+            messageInput.value = '';
+            sendBtn.disabled = true;
+            messageInput.disabled = true;
+            
+            const loadingMsg = addMessage('bot', '<div class="loading"><div class="loading-dot"></div><div class="loading-dot"></div><div class="loading-dot"></div></div>');
+            
             try {
-                let url;
-                if (timeRange.type === 'future') {
-                    if (timeRange.nextSeason) {
-                        // For next growing season (can't get forecast that far)
-                        // Use historical average from previous years as proxy
-                        return { useHistoricalProxy: true, message: "Long-range forecast not available" };
-                    }
-                    // Forecast API (up to 16 days)
-                    url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&hourly=temperature_2m,relative_humidity_2m,precipitation,dewpoint_2m&forecast_days=${Math.min(timeRange.days, 16)}&timezone=America/Halifax`;
-                } else {
-                    // Historical API
-                    const startDate = timeRange.start.toISOString().split('T')[0];
-                    const endDate = timeRange.end.toISOString().split('T')[0];
-                    url = `https://archive-api.open-meteo.com/v1/archive?latitude=${lat}&longitude=${lon}&start_date=${startDate}&end_date=${endDate}&hourly=temperature_2m,relative_humidity_2m,precipitation,dewpoint_2m&timezone=America/Halifax`;
-                }
-
-                const response = await fetch(url);
+                const response = await fetch('https://chat-cape-breton.onrender.com/ask', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ question, docId })
+                });
+                
                 const data = await response.json();
-                return data;
-            } catch (error) {
-                console.error('Weather fetch error:', error);
-                return null;
-            }
-        }
-
-        // Convert weather API data to our format
-        function convertWeatherData(apiData, lat, lon) {
-            if (!apiData || !apiData.hourly) return [];
-
-            const hourly = apiData.hourly;
-            const dailyData = [];
-
-            // Group hourly data into days
-            for (let i = 0; i < hourly.time.length; i += 24) {
-                const date = new Date(hourly.time[i]);
-                const temps = [];
-                const rhs = [];
-                const dews = [];
-                let precip = 0;
-
-                for (let j = i; j < Math.min(i + 24, hourly.time.length); j++) {
-                    temps.push(hourly.temperature_2m[j]);
-                    rhs.push(hourly.relative_humidity_2m[j]);
-                    dews.push(hourly.dewpoint_2m[j]);
-                    precip += hourly.precipitation[j] || 0;
-                }
-
-                dailyData.push({
-                    LAT: lat,
-                    LON: lon,
-                    YEAR: date.getFullYear(),
-                    DOY: Math.floor((date - new Date(date.getFullYear(), 0, 0)) / 86400000),
-                    T2M: temps.reduce((a, b) => a + b, 0) / temps.length,
-                    RH2M: rhs.reduce((a, b) => a + b, 0) / rhs.length,
-                    T2MDEW: dews.reduce((a, b) => a + b, 0) / dews.length,
-                    PRECTOTCORR: precip,
-                    date: date.toISOString().split('T')[0]
-                });
-            }
-
-            return dailyData;
-        }
-
-        // Calculate if leaves would be wet
-        function calculateLeafWetness(temp, rh, dewPoint) {
-            const tempDewDiff = temp - dewPoint;
-            return (rh > 90 || tempDewDiff < 2) ? 1 : 0;
-        }
-
-        // Calculate Disease Severity Value (Blitecast model)
-        function calculateDSV(temp, wetHours) {
-            if (wetHours < 10) return 0;
-            
-            if (temp >= 7 && temp < 12) {
-                if (wetHours >= 15) return 2;
-                if (wetHours >= 12) return 1;
-            } else if (temp >= 12 && temp < 16) {
-                if (wetHours >= 12) return 2;
-                if (wetHours >= 9) return 1;
-            } else if (temp >= 16 && temp < 21) {
-                if (wetHours >= 9) return 3;
-                if (wetHours >= 6) return 2;
-            } else if (temp >= 21 && temp <= 27) {
-                if (wetHours >= 12) return 3;
-                if (wetHours >= 9) return 2;
-            }
-            
-            return 0;
-        }
-
-        // Analyze weather data for blight risk
-        function analyzeData(data) {
-            const days = data.map(row => {
-                const leafWet = calculateLeafWetness(row.T2M, row.RH2M, row.T2MDEW);
-                return {
-                    ...row,
-                    leafWet: leafWet
-                };
-            });
-
-            days.sort((a, b) => {
-                if (a.YEAR !== b.YEAR) return a.YEAR - b.YEAR;
-                return a.DOY - b.DOY;
-            });
-
-            let cumulativeDSV = 0;
-            let riskPeriods = [];
-            let currentRisk = null;
-
-            for (let i = 0; i < days.length; i++) {
-                const day = days[i];
-                const wetHours = day.leafWet * 24;
-                const dsv = calculateDSV(day.T2M, wetHours);
-                cumulativeDSV += dsv;
-
-                if (dsv === 0 && i > 0) {
-                    cumulativeDSV = Math.max(0, cumulativeDSV - 0.5);
-                }
-
-                let riskLevel = 'Low';
-                if (cumulativeDSV >= 18) riskLevel = 'Severe';
-                else if (cumulativeDSV >= 10) riskLevel = 'High';
-                else if (cumulativeDSV >= 5) riskLevel = 'Moderate';
-
-                day.cumulativeDSV = cumulativeDSV;
-                day.riskLevel = riskLevel;
-
-                if (riskLevel !== 'Low') {
-                    if (!currentRisk || currentRisk.end < i - 7) {
-                        currentRisk = {
-                            start: i,
-                            end: i,
-                            startDay: day,
-                            maxDSV: cumulativeDSV,
-                            maxRisk: riskLevel
-                        };
-                        riskPeriods.push(currentRisk);
-                    } else {
-                        currentRisk.end = i;
-                        currentRisk.endDay = day;
-                        currentRisk.maxDSV = Math.max(currentRisk.maxDSV, cumulativeDSV);
-                        if (riskLevel === 'Severe' || 
-                            (riskLevel === 'High' && currentRisk.maxRisk !== 'Severe')) {
-                            currentRisk.maxRisk = riskLevel;
-                        }
-                    }
-                }
-            }
-
-            return {
-                days: days,
-                riskPeriods: riskPeriods
-            };
-        }
-
-        // Format analysis results
-        function formatAnalysisResults(analysis, locationName, timeRange) {
-            const now = new Date();
-            const isWinter = now.getMonth() < 4 || now.getMonth() > 9; // Before May or after October
-            
-            let response = `📍 Location: ${locationName}\n`;
-            response += `📅 Period: ${timeRange.start.toLocaleDateString()} - ${timeRange.end.toLocaleDateString()}\n`;
-            response += `⏱️ Analysis: ${timeRange.type === 'future' ? 'Forecast' : 'Historical'}\n\n`;
-
-            const days = analysis.days;
-            const severeCount = days.filter(d => d.riskLevel === 'Severe').length;
-            const highCount = days.filter(d => d.riskLevel === 'High').length;
-            const moderateCount = days.filter(d => d.riskLevel === 'Moderate').length;
-
-            // Add context for winter queries
-            if (isWinter && timeRange.type === 'future' && !timeRange.season) {
-                response += `❄️ Winter Season Note:\n`;
-                response += `It's currently winter - potato late blight is not active in cold temperatures (below 7°C).\n`;
-                response += `Blight typically occurs during the growing season (June-September) when temperatures are 15-25°C.\n\n`;
-                response += `Try asking: "What was the last blight period in ${locationName}?" to see last growing season's data.\n`;
-                return response;
-            }
-
-            response += `📊 Summary:\n`;
-            response += `• Total days analyzed: ${days.length}\n`;
-            response += `• 🔴 Severe risk days: ${severeCount}\n`;
-            response += `• 🟠 High risk days: ${highCount}\n`;
-            response += `• 🟡 Moderate risk days: ${moderateCount}\n\n`;
-
-            if (analysis.riskPeriods.length > 0) {
-                response += `⚠️ Risk Periods Found:\n\n`;
-                analysis.riskPeriods.forEach((period, idx) => {
-                    const emoji = period.maxRisk === 'Severe' ? '🔴' : 
-                                period.maxRisk === 'High' ? '🟠' : '🟡';
-                    
-                    response += `${emoji} ${idx + 1}. ${period.maxRisk} Risk (DSV: ${period.maxDSV.toFixed(1)})\n`;
-                    response += `   ${period.startDay.date}`;
-                    if (period.endDay && period.endDay.date !== period.startDay.date) {
-                        response += ` to ${period.endDay.date}`;
-                    }
-                    response += `\n`;
-                    response += `   Avg temp: ${period.startDay.T2M.toFixed(1)}°C, Humidity: ${period.startDay.RH2M.toFixed(0)}%\n`;
-
-                    if (timeRange.type === 'past') {
-                        response += `   ${period.maxRisk === 'Severe' ? '⚠️ Fungicide should have been applied' : period.maxRisk === 'High' ? 'ℹ️ High risk conditions occurred' : 'ℹ️ Moderate risk conditions'}\n`;
-                    } else {
-                        if (period.maxRisk === 'Severe') {
-                            response += `   ⚠️ ACTION: Apply fungicide immediately!\n`;
-                        } else if (period.maxRisk === 'High') {
-                            response += `   ⚠️ ACTION: Preventative fungicide recommended\n`;
-                        } else {
-                            response += `   ℹ️ Monitor closely, prepare for treatment\n`;
-                        }
-                    }
-                    response += `\n`;
-                });
-            } else {
-                if (timeRange.season) {
-                    response += `✅ Good news! No significant blight risk detected during the ${timeRange.start.getFullYear()} growing season.\n`;
-                    response += `\nThis was likely a favorable year for potato production in ${locationName}!`;
+                loadingMsg.remove();
+                
+                if (data.success) {
+                    addMessage('bot', data.answer);
                 } else {
-                    response += `✅ No significant blight risk detected during this period.\n`;
-                    if (timeRange.type === 'future') {
-                        response += `\nConditions are not favorable for blight development. Continue routine monitoring.`;
-                    }
+                    addMessage('bot', '❌ Error: ' + data.error);
                 }
+            } catch (error) {
+                loadingMsg.remove();
+                addMessage('bot', '❌ Error connecting to server.');
+                console.error(error);
             }
-
-            // Add recommendations
-            if (timeRange.type === 'future' && (severeCount > 0 || highCount > 0)) {
-                response += `\n\n💡 Recommendations:\n`;
-                response += `• Have fungicide ready\n`;
-                response += `• Monitor plants daily for symptoms\n`;
-                response += `• Check weather updates frequently\n`;
-                response += `• Consider applying fungicide at first sign of risk\n`;
-            }
-
-            return response;
+            
+            sendBtn.disabled = false;
+            messageInput.disabled = false;
+            messageInput.focus();
         }
-
-        // Process user questions
-        async function processQuestion(question) {
-            const lowerQ = question.toLowerCase();
-
-            // Greetings
-            if (lowerQ.match(/^(hi|hello|hey|good morning|good afternoon)/)) {
-                return "Hello! 👋 I'm your potato blight risk assistant.\n\nJust ask me questions like:\n• 'What's the blight risk in Sydney next week?'\n• 'Show me risk for Halifax in June'\n• 'Analyze Baddeck for the past month'";
-            }
-
-            if (lowerQ.includes('thank')) {
-                return "You're welcome! Feel free to ask about blight risk in any location or time period. 😊";
-            }
-
-            // General blight info
-            if (lowerQ.includes('what is blight') || lowerQ.includes('what causes blight')) {
-                return "🍂 Potato Late Blight\n\nCaused by Phytophthora infestans. Favorable conditions:\n• Temperature: 15-25°C\n• High humidity: >90%\n• Leaf wetness: 10+ hours\n\nAsk me about specific locations to see when these conditions occur!";
-            }
-
-            if (lowerQ.includes('how to prevent') || lowerQ.includes('prevention')) {
-                return "🛡️ Blight Prevention:\n\n1. Fungicide during high-risk periods\n2. Plant resistant varieties\n3. Proper spacing\n4. Remove infected plants\n5. Monitor weather (that's where I help!)\n\nTry: 'What's the risk in [your location] next week?'";
-            }
-
-            // Check if question contains location and time info
-            const hasRisk = lowerQ.includes('risk') || lowerQ.includes('blight');
-            const hasWhat = lowerQ.includes('what') || lowerQ.includes('show') || lowerQ.includes('analyze');
-
-            if (hasRisk || hasWhat) {
-                // Extract location
-                const location = await geocodeLocation(question);
-                if (!location) {
-                    return "I couldn't find that location. Try:\n• Sydney, NS\n• Halifax\n• Baddeck\n• Cape Breton\n• Nova Scotia";
-                }
-
-                // Extract time range
-                const timeRange = parseTimeExpression(question);
-
-                // Show fetching message
-                addMessage('assistant', `🔍 Fetching weather data for ${location.name}...\n⏳ Analyzing ${timeRange.type === 'future' ? 'forecast' : 'historical'} data...`);
-
-                // Fetch and analyze data
-                const weatherApiData = await fetchWeatherData(location.lat, location.lon, timeRange);
-                
-                if (weatherApiData && weatherApiData.useHistoricalProxy) {
-                    // Long-range forecast not available - explain limitations
-                    return `📍 Location: ${location.name}\n📅 Period: ${timeRange.start.toLocaleDateString()} - ${timeRange.end.toLocaleDateString()}\n\n` +
-                           `⚠️ Long-Range Forecast Limitation:\n\n` +
-                           `Weather forecasts are only reliable up to 16 days ahead. I can't accurately predict conditions for ${timeRange.start.toLocaleDateString('en-US', {month: 'long', year: 'numeric'})}.\n\n` +
-                           `🔮 What I can tell you:\n\n` +
-                           `Based on historical patterns in ${location.name}:\n` +
-                           `• **June-July**: Peak blight risk period\n` +
-                           `• **Typical conditions**: 15-20°C, high humidity (>85%)\n` +
-                           `• **Critical weeks**: Mid-June through early August\n\n` +
-                           `💡 Recommendations:\n` +
-                           `• Start monitoring weather in late May\n` +
-                           `• Have fungicide ready by early June\n` +
-                           `• Check back in May for accurate June forecast\n` +
-                           `• Ask me "What was last year's blight risk?" to see historical patterns`;
-                }
-                
-                if (!weatherApiData) {
-                    return "Sorry, I couldn't fetch weather data. Please try again.";
-                }
-
-                const weatherDataConverted = convertWeatherData(weatherApiData, location.lat, location.lon);
-                const analysis = analyzeData(weatherDataConverted);
-
-                return formatAnalysisResults(analysis, location.name, timeRange);
-            }
-
-            return "I can analyze blight risk for any location and time!\n\nTry asking:\n• 'What's the risk in Sydney next week?'\n• 'Show me Baddeck for past month'\n• 'Analyze Halifax in July'\n• 'Cape Breton tomorrow'";
-        }
-
-        // Add message to chat
-        function addMessage(role, content) {
-            const messagesDiv = document.getElementById('messages');
+        
+        function addMessage(type, content) {
             const messageDiv = document.createElement('div');
-            messageDiv.className = `message ${role}`;
+            messageDiv.className = `message ${type}`;
+            
+            const avatar = document.createElement('div');
+            avatar.className = 'message-avatar';
+            avatar.textContent = type === 'bot' ? '🌊' : '👤';
+            
+            let formattedContent = content;
+            
+            if (type === 'bot' && !content.includes('<div class="loading">')) {
+                formattedContent = formattedContent.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+                
+                if (formattedContent.includes('•')) {
+                    const lines = formattedContent.split('\n');
+                    let inList = false;
+                    const formatted = [];
+                    
+                    for (let line of lines) {
+                        if (line.trim().startsWith('•')) {
+                            if (!inList) {
+                                formatted.push('<ul>');
+                                inList = true;
+                            }
+                            formatted.push('<li>' + line.replace('•', '').trim() + '</li>');
+                        } else {
+                            if (inList) {
+                                formatted.push('</ul>');
+                                inList = false;
+                            }
+                            formatted.push(line);
+                        }
+                    }
+                    if (inList) formatted.push('</ul>');
+                    formattedContent = formatted.join('\n');
+                }
+                
+                formattedContent = formattedContent.split('\n\n').map(para => {
+                    if (!para.trim().startsWith('<ul>') && !para.trim().startsWith('<ol>') && para.trim()) {
+                        return '<p>' + para.trim() + '</p>';
+                    }
+                    return para;
+                }).join('');
+                
+                formattedContent = formattedContent.replace(/\n/g, '<br>');
+            }
             
             const contentDiv = document.createElement('div');
             contentDiv.className = 'message-content';
+            contentDiv.innerHTML = formattedContent;
             
-            if (role === 'assistant') {
-                const labelDiv = document.createElement('div');
-                labelDiv.className = 'assistant-label';
-                labelDiv.innerHTML = `
-                    <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
-                    </svg>
-                    Assistant
-                `;
-                contentDiv.appendChild(labelDiv);
-            }
-            
-            const textDiv = document.createElement('div');
-            textDiv.textContent = content;
-            contentDiv.appendChild(textDiv);
-            
+            messageDiv.appendChild(avatar);
             messageDiv.appendChild(contentDiv);
-            messagesDiv.appendChild(messageDiv);
+            messagesWrapper.appendChild(messageDiv);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
             
-            document.getElementById('chatContainer').scrollTop = document.getElementById('chatContainer').scrollHeight;
+            return messageDiv;
         }
-
-        function showLoading() {
-            const messagesDiv = document.getElementById('messages');
-            const loadingDiv = document.createElement('div');
-            loadingDiv.className = 'message assistant';
-            loadingDiv.id = 'loading';
-            loadingDiv.innerHTML = `
-                <div class="message-content">
-                    <div class="loading">
-                        <div class="spinner"></div>
-                        <span>Analyzing...</span>
-                    </div>
-                </div>
-            `;
-            messagesDiv.appendChild(loadingDiv);
-            document.getElementById('chatContainer').scrollTop = document.getElementById('chatContainer').scrollHeight;
-        }
-
-        function hideLoading() {
-            const loading = document.getElementById('loading');
-            if (loading) loading.remove();
-        }
-
-        // Send message
-        async function sendMessage() {
-            const input = document.getElementById('userInput');
-            const question = input.value.trim();
-            if (!question) return;
-            
-            addMessage('user', question);
-            input.value = '';
-            
-            showLoading();
-            
-            try {
-                const response = await processQuestion(question);
-                hideLoading();
-                addMessage('assistant', response);
-            } catch (error) {
-                hideLoading();
-                addMessage('assistant', 'Sorry, something went wrong. Please try again.');
-            }
-        }
-
-        document.getElementById('sendBtn').addEventListener('click', sendMessage);
-        document.getElementById('userInput').addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') sendMessage();
-        });
-
-        // File upload still works for manual data
-        document.getElementById('fileInput').addEventListener('change', function(e) {
-            const file = e.target.files[0];
-            if (!file) return;
-            
-            const reader = new FileReader();
-            reader.onload = function(event) {
-                try {
-                    const text = event.target.result;
-                    const lines = text.trim().split('\n');
-                    const headers = lines[0].split(/[\t,]/);
-                    
-                    const parsed = lines.slice(1).map(line => {
-                        const values = line.split(/[\t,]/);
-                        const row = {};
-                        headers.forEach((header, i) => {
-                            const value = values[i]?.trim();
-                            row[header.trim()] = isNaN(value) ? value : parseFloat(value);
-                        });
-                        return row;
-                    }).filter(row => row.LAT && row.LON);
-                    
-                    weatherData = parsed;
-                    const analysis = analyzeData(parsed);
-                    
-                    document.getElementById('uploadArea').innerHTML = `
-                        <div class="data-loaded">✓ Data loaded (${parsed.length} records)</div>
-                    `;
-                    
-                    addMessage('assistant', 
-                        `Great! I've loaded ${parsed.length} data points from your file.\n\n` +
-                        `The data covers ${analysis.days.length} days. ` +
-                        `Found ${analysis.riskPeriods.length} risk period(s).\n\n` +
-                        `You can still ask me to fetch live weather data for any location!`
-                    );
-                } catch (error) {
-                    addMessage('assistant', 'Sorry, there was an error reading your file. Please make sure it\'s a valid CSV/TSV file.');
-                }
-            };
-            reader.readAsText(file);
-        });
-        </script>
-    </body>
+    </script>
+</body>
 </html>
