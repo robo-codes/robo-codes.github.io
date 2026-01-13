@@ -474,7 +474,7 @@
             formData.append('pdf', file);
             
             try {
-                const response = await fetch('http://localhost:3000/upload', {
+                const response = await fetch('https://chat-cape-breton.onrender.com/upload', {
                     method: 'POST',
                     body: formData
                 });
@@ -517,7 +517,7 @@
             const loadingMsg = addMessage('bot', '<div class="loading"><div class="loading-dot"></div><div class="loading-dot"></div><div class="loading-dot"></div></div>');
             
             try {
-                const response = await fetch('http://localhost:3000/ask', {
+                const response = await fetch('https://chat-cape-breton.onrender.com/ask', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ question, docId })
@@ -602,4 +602,5 @@
         }
     </script>
 </body>
+
 </html>
